@@ -1,3 +1,6 @@
+const API_URL = import.meta.env.VITE_API_URL;
+const AUTH_API_URL = `${API_URL}/auth`;
+
 export const getTokenFromStorage = () => {
 	try {
 		let localStorageToken = localStorage.getItem("token");
@@ -35,10 +38,7 @@ export const login = async (credentials) => {
 			redirect: "follow",
 		};
 
-		let loginResponse = await fetch(
-			"http://127.0.0.1:8000/api/auth/login/",
-			requestOptions
-		);
+		let loginResponse = await fetch(`${AUTH_API_URL}/login/`, requestOptions);
 
 		if (loginResponse.status === 200) {
 			let response = await loginResponse.json();
@@ -77,7 +77,7 @@ export const register = async (newUser) => {
 		};
 
 		let registerResponse = await fetch(
-			"http://127.0.0.1:8000/api/auth/register/",
+			`${AUTH_API_URL}/register/`,
 			requestOptions
 		);
 		if (registerResponse.status == 200) {

@@ -74,7 +74,7 @@ function CategoryArticles() {
 						</ul>
 					</nav>
 					<div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-						{articles.length ? (
+						{articles && articles.length ? (
 							articles.map((article) => {
 								return (
 									<div className="col" key={article.id}>

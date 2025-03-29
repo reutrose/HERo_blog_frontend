@@ -1,3 +1,7 @@
+const API_URL = import.meta.env.VITE_API_URL;
+const COMMENTS_API_URL = `${API_URL}/comments`;
+const ARTICLES_API_URL = `${API_URL}/articles`;
+
 export const getCommentsForArticle = async (article_id) => {
 	const requestOptions = {
 		method: "GET",
@@ -5,7 +9,7 @@ export const getCommentsForArticle = async (article_id) => {
 	};
 
 	const response = await fetch(
-		`http://127.0.0.1:8000/api/articles/${article_id}/comments/`,
+		`${ARTICLES_API_URL}/${article_id}/comments/`,
 		requestOptions
 	);
 	const comments = await response.json();
@@ -36,10 +40,7 @@ export const createCommentForArticle = async (
 			redirect: "follow",
 		};
 
-		const response = await fetch(
-			`http://127.0.0.1:8000/api/comments/`,
-			requestOptions
-		);
+		const response = await fetch(`${COMMENTS_API_URL}/`, requestOptions);
 		const comment = await response.json();
 		return comment;
 	} catch (error) {
@@ -59,7 +60,7 @@ export const deleteCommentFromArticle = async (comment_id, token) => {
 
 	try {
 		let deleted = await fetch(
-			`http://127.0.0.1:8000/api/comments/${comment_id}/`,
+			`${COMMENTS_API_URL}/${comment_id}/`,
 			requestOptions
 		);
 
@@ -93,7 +94,7 @@ export const editComment = async (
 		};
 
 		let updated = await fetch(
-			`http://127.0.0.1:8000/api/comments/${comment_id}/`,
+			`${COMMENTS_API_URL}/${comment_id}/`,
 			requestOptions
 		);
 		updated = await updated.json();
@@ -111,7 +112,7 @@ export const getCommentsByAuthor = async (author_id, pageNum = 1) => {
 		};
 
 		let response = await fetch(
-			`http://127.0.0.1:8000/api/comments/?author_id=${author_id}&page=${pageNum}`,
+			`${COMMENTS_API_URL}/?author_id=${author_id}&page=${pageNum}`,
 			requestOptions
 		);
 		if (response.status == 200) {

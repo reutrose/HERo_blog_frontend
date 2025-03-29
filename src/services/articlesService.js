@@ -1,4 +1,5 @@
-const ARTICLES_API_URL = "http://127.0.0.1:8000/api/articles";
+const API_URL = import.meta.env.VITE_API_URL;
+const ARTICLES_API_URL = `${API_URL}/articles`;
 
 export const getAllArticles = async (page = 1) => {
 	try {
@@ -8,7 +9,7 @@ export const getAllArticles = async (page = 1) => {
 		};
 
 		let response = await fetch(
-			`http://127.0.0.1:8000//api/articles/?ordering=-created_at&page=${page}`,
+			`${ARTICLES_API_URL}/?ordering=-created_at&page=${page}`,
 			requestOptions
 		);
 
@@ -42,7 +43,7 @@ export const getArticleByAuthor = async (author_id, pageNum = 1) => {
 		};
 
 		let response = await fetch(
-			`http://127.0.0.1:8000/api/articles/?author=${author_id}&page=${pageNum}`,
+			`${ARTICLES_API_URL}/?author=${author_id}&page=${pageNum}`,
 			requestOptions
 		);
 		if (response.status == 200) {
@@ -62,7 +63,7 @@ export const getArticleLikes = async (article_id) => {
 			redirect: "follow",
 		};
 		const response = await fetch(
-			`http://127.0.0.1:8000/api/articles/${article_id}/likes/`,
+			`${ARTICLES_API_URL}/${article_id}/likes/`,
 			requestOptions
 		);
 		const likes = await response.json();
@@ -89,10 +90,7 @@ export const likeArticle = async (article_id, token) => {
 			redirect: "follow",
 		};
 
-		const response = await fetch(
-			`http://127.0.0.1:8000/api/likes/`,
-			requestOptions
-		);
+		const response = await fetch(`${API_URL}/likes/`, requestOptions);
 		const like = await response.json();
 		return like;
 	} catch (error) {
@@ -112,7 +110,7 @@ export const unlikeArticle = async (token, like_id) => {
 		};
 
 		const response = await fetch(
-			`http://127.0.0.1:8000/api/likes/${like_id}/`,
+			`${API_URL}/likes/${like_id}/`,
 			requestOptions
 		);
 
@@ -151,10 +149,7 @@ export const createArticle = async (article, token) => {
 			redirect: "follow",
 		};
 
-		const response = await fetch(
-			"http://127.0.0.1:8000/api/articles/",
-			requestOptions
-		);
+		const response = await fetch(`${ARTICLES_API_URL}/`, requestOptions);
 
 		if (!response.ok) {
 			const errorData = await response.json();
@@ -183,7 +178,7 @@ export const editArticle = async (article_id, updatedArticle, token) => {
 
 	try {
 		const response = await fetch(
-			`http://127.0.0.1:8000/api/articles/${article_id}/`,
+			`${ARTICLES_API_URL}/${article_id}/`,
 			requestOptions
 		);
 
@@ -229,7 +224,7 @@ export const getArticlesOfCategory = async (category, page = 1) => {
 
 	try {
 		const response = await fetch(
-			`http://127.0.0.1:8000/api/articles/?category=${category}&page=${page}`,
+			`${ARTICLES_API_URL}/?category=${category}&page=${page}`,
 			requestOptions
 		);
 

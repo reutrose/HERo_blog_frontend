@@ -1,3 +1,6 @@
+const API_URL = import.meta.env.VITE_API_URL;
+const ARTICLES_API_URL = `${API_URL}/articles`;
+
 export const search = async (searchQuery) => {
 	try {
 		const requestOptions = {
@@ -6,7 +9,7 @@ export const search = async (searchQuery) => {
 		};
 
 		let response = await fetch(
-			`http://127.0.0.1:8000/api/articles/?search=${searchQuery}`,
+			`${ARTICLES_API_URL}/?search=${searchQuery}`,
 			requestOptions
 		);
 
