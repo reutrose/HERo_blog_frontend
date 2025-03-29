@@ -1,0 +1,30 @@
+.article-box {
+	position: relative;
+}
+
+.overlay-box {
+	backdrop-filter: blur(3px);
+	background-color: rgba(0, 0, 0, 0.3);
+	width: 100%;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	padding: 15px;
+	border-radius: 0 0 16px 16px;
+}
+
+.category-btn {
+	background-color: rgba(0, 0, 0, 0.3);
+	color: rgb(255, 255, 255);
+	text-transform: capitalize;
+	border: 1px solid white;
+	border-radius: 20px;
+}
+
+.category-btn:hover {
+	background-color: rgba(0, 0, 0, 0.5);
+	color: rgb(255, 255, 255);
+	text-transform: capitalize;
+	border: 1px solid white;
+	border-radius: 20px;
+}

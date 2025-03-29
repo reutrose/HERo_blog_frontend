@@ -1,0 +1,36 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+html {
+	background-color: #f1aeb5;
+}
+
+.text-raleway {
+	font-family: "Raleway", sans-serif;
+}
+
+.text-roboto {
+	font-family: "Roboto", serif;
+}
+
+.delete-article-modal {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background-color: rgba(0, 0, 0, 0.3);
+	z-index: 1000;
+	color: white;
+}
+
+.add-article-button {
+	position: fixed;
+	bottom: 2%;
+	left: 2%;
+	height: 50px;
+	width: 50px;
+}
