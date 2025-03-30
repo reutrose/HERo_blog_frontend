@@ -141,3 +141,21 @@ export const editUserProfile = async (user_id, newData, token) => {
 		console.error(error);
 	}
 };
+
+export const deleteUser = async (user_id, token) => {
+	const myHeaders = new Headers();
+	myHeaders.append("Authorization", `Bearer ${token}`);
+
+	const requestOptions = {
+		method: "DELETE",
+		headers: myHeaders,
+		redirect: "follow",
+	};
+
+	try {
+		const deleted = await fetch(`${API_URL}users/${user_id}/`, requestOptions);
+		return { status: deleted.status };
+	} catch (error) {
+		console.error(error);
+	}
+};

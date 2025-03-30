@@ -1,12 +1,13 @@
 import { useContext, useEffect, useState } from "react";
-import { getUserProfileById } from "../services/usersService";
+import { deleteUser, getUserProfileById } from "../services/usersService";
 import UserContext from "../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 
 function UserProfileDashboard() {
-	const { userId } = useContext(UserContext);
+	const { userId, token, userHandler } = useContext(UserContext);
 	const [user, setUser] = useState({});
 	const [isFetching, setIsFetching] = useState(true);
+	const [isDeleting, setIsDeleting] = useState(false);
 	const nav = useNavigate();
 
 	useEffect(() => {
@@ -17,6 +18,15 @@ function UserProfileDashboard() {
 		};
 		getUser();
 	}, [userId]);
+
+	const handleDelete = async () => {
+		await deleteUser(userId, token);
+		setIsDeleting(false);
+		localStorage.removeItem("token");
+		sessionStorage.removeItem("token");
+		userHandler();
+		nav("/");
+	};
 
 	return (
 		<>
@@ -86,6 +96,27 @@ function UserProfileDashboard() {
 								</p>
 								<p className="p-0 m-0">{user.bio ? user.bio : ""}</p>
 							</div>
+						</div>
+						<div className="container d-flex justify-content-center align-items-center p-4">
+							<button
+								className="btn btn-outline-danger rounded-4"
+								onClick={() => {
+									setIsDeleting(true);
+									handleDelete();
+								}}
+							>
+								{!isDeleting ? (
+									"Delete my account permanently"
+								) : (
+									<>
+										<span
+											className="spinner-border spinner-border-sm"
+											aria-hidden="true"
+										></span>
+										<span role="status">Loading...</span>
+									</>
+								)}
+							</button>
 						</div>
 					</div>
 				)}
