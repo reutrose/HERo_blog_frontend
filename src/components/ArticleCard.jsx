@@ -7,7 +7,7 @@ import DeleteArticleModal from "./DeleteArticleModal";
 
 function ArticleCard({ article }) {
 	const nav = useNavigate();
-	const { userId, token } = useContext(UserContext);
+	const { userId, token, userType } = useContext(UserContext);
 	const [isDeleted, setIsDeleted] = useState(false);
 	const [deleteModal, setDeleteModal] = useState(false);
 	const formattedDate = article.created_at
@@ -42,7 +42,9 @@ function ArticleCard({ article }) {
 				</div>
 			) : (
 				<div className="card border-0 text-roboto h-100">
-					{article.author_id && article.author_id == userId ? (
+					{userType == "admin" ||
+					userType == "superuser" ||
+					(article.author_id && article.author_id == userId) ? (
 						<div className="container d-flex justify-content-center align-items-center">
 							<button
 								className="bg-white border-0"
@@ -97,6 +99,13 @@ function ArticleCard({ article }) {
 									{article.title ? article.title : ""}
 								</h5>
 							</Link>
+						</div>
+						<div>
+							<p className="card-text mb-1">
+								<small>
+									By {article.author_username ? article.author_username : ""}
+								</small>
+							</p>
 						</div>
 						<div>
 							<p className="card-text mb-1">

@@ -4,6 +4,7 @@ import UserContext from "../contexts/UserContext";
 import RecentUserArticles from "./RecentUserArticles";
 import { getCommentsByAuthor } from "../services/commentsService";
 import RecentUserComments from "./RecentUserComments";
+import UserProfileDashboard from "./UserProfileDashboard";
 
 function UserDashboard() {
 	const { userType, userId, username } = useContext(UserContext);
@@ -30,6 +31,7 @@ function UserDashboard() {
 				<h2 className="text-center p-3 text-pink">
 					<span className="text-capitalize">{username}</span>&apos;s Dashboard
 				</h2>
+				<UserProfileDashboard />
 				{userType == "superuser" || userType == "moderator" ? (
 					<RecentUserArticles userArticles={userArticles} />
 				) : null}

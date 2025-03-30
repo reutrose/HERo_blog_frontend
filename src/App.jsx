@@ -20,6 +20,9 @@ import EditArticle from "./components/EditArticle";
 import PageNotFound from "./components/PageNotFound";
 import AddArticleButton from "./components/AddArticleButton";
 import CategoryArticles from "./components/CategoryArticles";
+import AboutUs from "./components/AboutUs";
+import PrivacyPolicy from "./components/PrivacyPolicy";
+import EditUserProfile from "./components/EditUserProfile";
 
 function App() {
 	// eslint-disable-next-line no-unused-vars
@@ -28,6 +31,7 @@ function App() {
 	const [showSearchModal, setShowSearchModal] = useState(false);
 	const [searchQuery, setSearchQuery] = useState("");
 	const [searchActive, setSearchActive] = useState(false);
+	const [isSearching, setIsSearching] = useState(false);
 
 	return (
 		<>
@@ -51,6 +55,7 @@ function App() {
 									setShowSearchModal={setShowSearchModal}
 									setSearchQuery={setSearchQuery}
 									setSearchActive={setSearchActive}
+									setIsSearching={setIsSearching}
 								/>
 							</div>
 							{showSearchModal ? (
@@ -64,6 +69,8 @@ function App() {
 										setSearchQuery={setSearchQuery}
 										searchActive={searchActive}
 										setSearchActive={setSearchActive}
+										isSearching={isSearching}
+										setIsSearching={setIsSearching}
 									/>
 								</div>
 							) : (
@@ -109,6 +116,11 @@ function App() {
 										)}
 
 										<Route path="/articles/:id/" element={<ArticlePage />} />
+										<Route path="/about-us/" element={<AboutUs />} />
+										<Route
+											path="/privacy-policy/"
+											element={<PrivacyPolicy />}
+										/>
 
 										<Route path="/categories/" element={<CategoriesIndex />} />
 										<Route
@@ -116,7 +128,16 @@ function App() {
 											element={<CategoryArticles />}
 										/>
 										{userType != "guest" && (
-											<Route path="/my-profile/" element={<UserDashboard />} />
+											<>
+												<Route
+													path="/my-profile/"
+													element={<UserDashboard />}
+												/>
+												<Route
+													path="/my-profile/edit/"
+													element={<EditUserProfile />}
+												/>
+											</>
 										)}
 										{(userType == "moderator" ||
 											userType == "admin" ||

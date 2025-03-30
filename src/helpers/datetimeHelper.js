@@ -1,5 +1,9 @@
 import { format, formatDistanceToNow } from "date-fns";
 
+export const formatBirthDate = (date) => {
+	return format(new Date(date), "yyyy-MM-dd");
+};
+
 export const formatDateOnly = (data) => {
 	return format(new Date(data), "dd/MMM/yyyy");
 };

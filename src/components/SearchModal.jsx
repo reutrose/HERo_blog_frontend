@@ -8,6 +8,8 @@ function SearchModal({
 	setSearchQuery,
 	searchActive,
 	setSearchActive,
+	setIsSearching,
+	isSearching,
 }) {
 	const [results, setResults] = useState([]);
 
@@ -17,10 +19,11 @@ function SearchModal({
 				let articles = await search(searchQuery);
 				setResults(articles);
 				setSearchActive(false);
+				setIsSearching(false);
 			};
 			handleSearch();
 		}
-	}, [searchActive, setSearchActive, searchQuery]);
+	}, [searchActive, setSearchActive, searchQuery, setIsSearching]);
 
 	return (
 		<>
@@ -37,21 +40,29 @@ function SearchModal({
 			</div>
 			<h3 className="text-center">Search Results</h3>
 			<hr />
-			<p className="p-2 text-secondary">Shows results for "{searchQuery}":</p>
-			{results && results.length ? (
-				<>
-					<div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-						{results.map((article) => {
-							return (
-								<div className="col" key={article.id}>
-									<ArticleCard article={article} />
-								</div>
-							);
-						})}
-					</div>
-				</>
+			<p className="p-2 text-secondary">
+				{searchQuery != "" ? `Shows results for ${searchQuery}` : ""}
+			</p>
+			{!isSearching ? (
+				results && results.length ? (
+					<>
+						<div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+							{results.map((article) => {
+								return (
+									<div className="col" key={article.id}>
+										<ArticleCard article={article} />
+									</div>
+								);
+							})}
+						</div>
+					</>
+				) : (
+					<p>No articles matched the search.</p>
+				)
 			) : (
-				<p>No articles matched the search.</p>
+				<div className="spinner-border text-pink" role="status">
+					<span className="visually-hidden">Loading...</span>
+				</div>
 			)}
 		</>
 	);

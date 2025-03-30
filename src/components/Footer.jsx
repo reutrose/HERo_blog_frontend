@@ -13,22 +13,34 @@ function Footer() {
 						<hr />
 						<ul style={{ listStyleType: "none" }} className="list-group">
 							<li>
-								<Link className="text-decoration-none text-light">
+								<Link
+									className="text-decoration-none text-light"
+									to="/about-us/"
+								>
 									About Us
 								</Link>
 							</li>
 							<li>
-								<Link className="text-decoration-none text-light">
+								<Link
+									className="text-decoration-none text-light"
+									to="/privacy-policy/"
+								>
 									Privacy Policy
 								</Link>
 							</li>
 							<li>
-								<Link className="text-decoration-none text-light">
+								<Link
+									className="text-decoration-none text-light"
+									to="/articles/"
+								>
 									Our Articles
 								</Link>
 							</li>
 							<li>
-								<Link className="text-decoration-none text-light">
+								<Link
+									className="text-decoration-none text-light"
+									to="/categories/"
+								>
 									Categories
 								</Link>
 							</li>

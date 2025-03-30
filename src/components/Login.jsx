@@ -1,14 +1,15 @@
 import { Field, Formik } from "formik";
 import * as Yup from "yup";
-import { login } from "../services/UsersService";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import UserContext from "../contexts/UserContext";
+import { login } from "../services/usersService";
 
 function Login() {
 	const nav = useNavigate();
 	const { userHandler } = useContext(UserContext);
 	const [errorMessage, setErrorMessage] = useState(null);
+	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	const handleLogin = async (values, actions) => {
 		let response = await login(values);
@@ -16,10 +17,11 @@ function Login() {
 			setErrorMessage(
 				"Something went wrong. Please check your username and password."
 			);
+			setIsSubmitting(false);
 			return;
 		} else {
 			userHandler();
-			actions.setSubmitting(false);
+			setIsSubmitting(false);
 			actions.resetForm({
 				username: "",
 				password: "",
@@ -43,6 +45,7 @@ function Login() {
 						})}
 						onSubmit={(values, actions) => {
 							setTimeout(() => {
+								setIsSubmitting(true);
 								handleLogin(values, actions);
 							}, 1000);
 						}}
@@ -112,8 +115,20 @@ function Login() {
 										<small>{errorMessage}</small>
 									</div>
 								) : null}
-								<button type="submit" className="btn btn-pink-subtle w-100">
-									Submit
+								<button
+									type="submit"
+									className="btn btn-pink-subtle w-100"
+									disabled={isSubmitting}
+								>
+									{isSubmitting ? (
+										<div className="d-flex justify-content-center">
+											<div className="spinner-border" role="status">
+												<span className="visually-hidden">Loading...</span>
+											</div>
+										</div>
+									) : (
+										"Submit"
+									)}
 								</button>
 								{errorMessage ? (
 									<div className="text-center p-3">

@@ -9,7 +9,6 @@ function RecentUserArticles({ userArticles }) {
 			<div className="container mt-5">
 				<div className="row">
 					<div className="col-9">
-						{" "}
 						<h3 className="fw-bold">Articles By You</h3>
 					</div>
 					<div className="col-3 d-flex justify-content-end align-items-center">

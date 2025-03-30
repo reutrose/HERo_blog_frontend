@@ -1,16 +1,18 @@
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { register } from "../services/UsersService";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import UserContext from "../contexts/UserContext";
+import { register } from "../services/usersService";
 
 function Register() {
 	const nav = useNavigate();
-	const { setToken } = useContext(UserContext);
+	const { setToken, userHandler } = useContext(UserContext);
 	const [errorMessage, setErrorMessage] = useState(null);
+	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	const handleRegister = async (values, actions) => {
+		setIsSubmitting(true);
 		let response = await register(values);
 		if (response.status == 400) {
 			setErrorMessage("Oops! Looks like this username is already taken.");
@@ -20,7 +22,8 @@ function Register() {
 			return;
 		} else {
 			setToken(response.token);
-			actions.setSubmitting(false);
+			userHandler();
+			setIsSubmitting(false);
 			actions.resetForm({
 				username: "",
 				password: "",
@@ -125,11 +128,18 @@ function Register() {
 								) : null}
 								<button
 									type="submit"
-									className={`btn btn-pink-subtle w-100 ${
-										!props.dirty || !props.isValid ? "disabled" : ""
-									}`}
+									className="btn btn-pink-subtle w-100"
+									disabled={isSubmitting}
 								>
-									Submit
+									{isSubmitting ? (
+										<div className="d-flex justify-content-center">
+											<div className="spinner-border" role="status">
+												<span className="visually-hidden">Loading...</span>
+											</div>
+										</div>
+									) : (
+										"Submit"
+									)}
 								</button>
 								{errorMessage ? (
 									<div className="text-center p-3">

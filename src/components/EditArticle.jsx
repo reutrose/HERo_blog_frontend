@@ -13,7 +13,7 @@ import PageNotFound from "./PageNotFound";
 function EditArticle() {
 	const { id } = useParams();
 	const nav = useNavigate();
-	const { userId, token } = useContext(UserContext);
+	const { userId, token, userType } = useContext(UserContext);
 	const [tags, setTags] = useState([]);
 	const [inputValue, setInputValue] = useState("");
 	const [article, setArticle] = useState({});
@@ -51,9 +51,9 @@ function EditArticle() {
 						<span className="visually-hidden">Loading...</span>
 					</div>
 				</div>
-			) : article.author_id != userId ? (
-				<PageNotFound />
-			) : (
+			) : article.author_id == userId ||
+			  userType == "admin" ||
+			  userType == "superuser" ? (
 				<Formik
 					initialValues={{
 						tags: article.tags,
@@ -256,6 +256,8 @@ function EditArticle() {
 						</form>
 					)}
 				</Formik>
+			) : (
+				<PageNotFound />
 			)}
 		</>
 	);

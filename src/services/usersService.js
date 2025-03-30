@@ -1,5 +1,6 @@
 const API_URL = import.meta.env.VITE_API_URL;
 const AUTH_API_URL = `${API_URL}/auth`;
+const PROFILES_API_URL = `${API_URL}/user-profiles`;
 
 export const getTokenFromStorage = () => {
 	try {
@@ -46,6 +47,7 @@ export const login = async (credentials) => {
 
 			if (credentials.toggle) {
 				localStorage.setItem("token", token);
+				sessionStorage.setItem("token", token);
 			} else {
 				sessionStorage.setItem("token", token);
 			}
@@ -90,5 +92,52 @@ export const register = async (newUser) => {
 	} catch (error) {
 		console.error(error);
 		return { status: error.status, token: null };
+	}
+};
+
+export const getUserProfileById = async (user_id) => {
+	const requestOptions = {
+		method: "GET",
+		redirect: "follow",
+	};
+
+	try {
+		const response = await fetch(
+			`${PROFILES_API_URL}/${user_id}/`,
+			requestOptions
+		);
+		const article = await response.json();
+		return article;
+	} catch (error) {
+		console.error(error);
+	}
+};
+
+export const editUserProfile = async (user_id, newData, token) => {
+	const myHeaders = new Headers();
+	myHeaders.append("Authorization", `Bearer ${token}`);
+
+	const requestOptions = {
+		method: "PUT",
+		headers: myHeaders,
+		body: newData,
+		redirect: "follow",
+	};
+
+	try {
+		const response = await fetch(
+			`${PROFILES_API_URL}/${user_id}/`,
+			requestOptions
+		);
+		if (!response.ok) {
+			const errorData = await response.json();
+			console.error("Error response:", errorData);
+			throw new Error(`Error: ${response.status}`);
+		}
+
+		let updatedUser = await response.json();
+		return updatedUser;
+	} catch (error) {
+		console.error(error);
 	}
 };

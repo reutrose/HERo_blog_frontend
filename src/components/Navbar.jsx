@@ -1,10 +1,15 @@
 import { useContext } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
-import { logout } from "../services/UsersService";
 import { categories } from "../services/articlesService";
+import { logout } from "../services/usersService";
 
-function Navbar({ setShowSearchModal, setSearchQuery, setSearchActive }) {
+function Navbar({
+	setShowSearchModal,
+	setSearchQuery,
+	setSearchActive,
+	setIsSearching,
+}) {
 	const { userType, username, userHandler } = useContext(UserContext);
 	const nav = useNavigate();
 
@@ -19,6 +24,10 @@ function Navbar({ setShowSearchModal, setSearchQuery, setSearchActive }) {
 	};
 
 	const handleSearch = async (value) => {
+		if (value != null) {
+			setShowSearchModal(true);
+			setSearchActive(true);
+		}
 		setSearchQuery(value);
 	};
 
@@ -110,7 +119,7 @@ function Navbar({ setShowSearchModal, setSearchQuery, setSearchActive }) {
 							<form className="d-flex" role="search">
 								<div className="input-group">
 									<input
-										className="form-control"
+										className="form-control border-0 border-start border-top border-bottom bg-white"
 										type="search"
 										placeholder="Search"
 										aria-label="Search"
@@ -119,20 +128,15 @@ function Navbar({ setShowSearchModal, setSearchQuery, setSearchActive }) {
 										}}
 										onChange={(e) => {
 											handleSearch(e.target.value);
+											setIsSearching(true);
 										}}
 										onBlur={(e) => {
 											e.target.value = "";
 										}}
 									/>
-									<button
-										className="btn btn-pink-subtle"
-										type="button"
-										onClick={() => {
-											setSearchActive(true);
-										}}
-									>
-										Search
-									</button>
+									<div className="bg-white border-end border-top border-bottom rounded-end p-2 d-flex justify-content-center align-items-center">
+										<i className="bi bi-search text-invisible-gray"></i>
+									</div>
 								</div>
 							</form>
 							<div className="dropdown m-2">
