@@ -48,7 +48,7 @@ function UserProfileDashboard() {
 					</div>
 				</div>
 				<hr />
-				{!isFetching && (
+				{!isFetching && user && (
 					<div className="row">
 						<div className="col-12 col-md-2 p-2 d-flex justify-content-center align-items-center">
 							<img
