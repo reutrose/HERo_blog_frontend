@@ -4,8 +4,8 @@ import * as Yup from "yup";
 import UserContext from "../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 import PageNotFound from "./PageNotFound";
-import { editUserProfile, getUserProfileById } from "../services/usersService";
 import { formatBirthDate } from "../helpers/datetimeHelper";
+import { editUserProfile, getUserProfileById } from "../services/usersService";
 
 function EditUserProfile() {
 	const nav = useNavigate();
