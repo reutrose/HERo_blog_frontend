@@ -1,5 +1,5 @@
 const API_URL = import.meta.env.VITE_API_URL;
-const ARTICLES_API_URL = `${API_URL}/articles`;
+const ARTICLES_API_URL = `${API_URL}articles`;
 
 export const getAllArticles = async (page = 1) => {
 	try {
@@ -90,7 +90,7 @@ export const likeArticle = async (article_id, token) => {
 			redirect: "follow",
 		};
 
-		const response = await fetch(`${API_URL}/likes/`, requestOptions);
+		const response = await fetch(`${API_URL}likes/`, requestOptions);
 		const like = await response.json();
 		return like;
 	} catch (error) {
@@ -109,10 +109,7 @@ export const unlikeArticle = async (token, like_id) => {
 			redirect: "follow",
 		};
 
-		const response = await fetch(
-			`${API_URL}/likes/${like_id}/`,
-			requestOptions
-		);
+		const response = await fetch(`${API_URL}likes/${like_id}/`, requestOptions);
 
 		return response;
 	} catch (error) {
@@ -207,7 +204,7 @@ export const deleteArticle = async (article_id, token) => {
 		};
 
 		let deleted = await fetch(
-			`http://127.0.0.1:8000/api/articles/${article_id}/`,
+			`${ARTICLES_API_URL}/${article_id}/`,
 			requestOptions
 		);
 		return { status: deleted.status };

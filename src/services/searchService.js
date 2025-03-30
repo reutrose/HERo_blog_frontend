@@ -1,5 +1,5 @@
 const API_URL = import.meta.env.VITE_API_URL;
-const ARTICLES_API_URL = `${API_URL}/articles`;
+const ARTICLES_API_URL = `${API_URL}articles`;
 
 export const search = async (searchQuery) => {
 	try {

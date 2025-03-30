@@ -1,6 +1,6 @@
 const API_URL = import.meta.env.VITE_API_URL;
-const AUTH_API_URL = `${API_URL}/auth`;
-const PROFILES_API_URL = `${API_URL}/user-profiles`;
+const AUTH_API_URL = `${API_URL}auth`;
+const PROFILES_API_URL = `${API_URL}user-profiles`;
 
 export const getTokenFromStorage = () => {
 	try {
